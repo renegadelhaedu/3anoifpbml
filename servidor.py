@@ -5,7 +5,7 @@ users = [['claudio','12345','Claudio Macena']
     ,['mari','9876','Lara Mariane'],
      ['pedro','teste1','Pedro Inácio']]
 
-@app.route('/')
+@app.route('/', methods=['POST','GET'])
 def pag_principal():
     return render_template('index.html')
 
