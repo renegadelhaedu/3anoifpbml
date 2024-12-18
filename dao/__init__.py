@@ -5,12 +5,12 @@ def conectardb():
     con = psycopg2.connect(
 
         host='localhost',
-        database = 'datafinanceflask',
+        database = '3anoifpb',
         user = 'postgres',
         password = '12345'
     )
-
     return con
+
 
 def login(user,senha):
     con = conectardb()

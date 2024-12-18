@@ -5,9 +5,24 @@ users = [['claudio','12345','Claudio Macena']
     ,['mari','9876','Lara Mariane'],
      ['pedro','teste1','Pedro Inácio']]
 
-@app.route('/', methods=['POST','GET'])
+app.secret_key = 'ASDdagsd@1'
+
+
+@app.route('/logout', methods=['POST', 'GET'])
+def sair():
+    session.pop('login')
+    return render_template('index.html')
+
+@app.route('/', methods=['POST', 'GET'])
 def pag_principal():
     return render_template('index.html')
+
+@app.route('/minhasfofocas')
+def pag_fofoca():
+    if 'login' in session:
+        return render_template('fofocas.html')
+    else:
+        return render_template('index.html')
 
 @app.route('/fazerlogin', methods=['POST'])
 def fazer_login():
@@ -17,6 +32,7 @@ def fazer_login():
     for usuario in users:
         if usuario[0] == login_user and usuario[1] == senha_user:
             nome_logado = usuario[2]
+            session['login'] = login_user
             logado = True
             break
 
