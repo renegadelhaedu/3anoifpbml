@@ -1,4 +1,7 @@
 from flask import *
+
+import dao
+
 app = Flask(__name__)
 
 users = [['claudio','12345','Claudio Macena']
@@ -28,19 +31,31 @@ def pag_fofoca():
 def fazer_login():
     login_user = request.form.get('login')
     senha_user = request.form.get('senha')
-    logado = False
-    for usuario in users:
-        if usuario[0] == login_user and usuario[1] == senha_user:
-            nome_logado = usuario[2]
-            session['login'] = login_user
-            logado = True
-            break
+    saida = dao.login(login_user, senha_user)
 
-    if logado == True:
-        return render_template('home.html', nome=nome_logado)
+    if len(saida) > 0:
+        nome_user = saida[0][0]
+        return render_template('home.html', nome=nome_user)
     else:
         return render_template('index.html')
 
+
+@app.route('/mostrar_cadastro')
+def mostrar_pag_cadastro():
+    return render_template('pagcadastro.html')
+
+@app.route('/cadastrarusuario', methods=['POST'])
+def cadastrar_usuario():
+    nome = request.form.get('nome')
+    login = request.form.get('login')
+    senha = request.form.get('senha')
+
+    if dao.inserir_user(nome, login, senha):
+        msg= 'usuário inserido com sucesso'
+        return render_template('index.html', texto=msg)
+    else:
+        msg = 'Erro ao inserir usuário'
+        return render_template('index.html', texto=msg)
 
 if __name__ == '__main__':
     app.run(debug=True)
