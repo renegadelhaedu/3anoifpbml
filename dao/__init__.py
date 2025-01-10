@@ -45,3 +45,14 @@ def inserir_user(nome, login, senha):
     conn.close()
     return exito
 
+def listar_usuarios():
+    con = conectardb()
+    cur = con.cursor()
+    sq = f"SELECT  nome, login from usuario"
+    cur.execute(sq)
+    saida = cur.fetchall()
+
+    cur.close()
+    con.close()
+
+    return saida

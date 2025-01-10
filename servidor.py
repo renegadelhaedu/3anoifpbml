@@ -1,12 +1,7 @@
 from flask import *
-
 import dao
 
 app = Flask(__name__)
-
-users = [['claudio','12345','Claudio Macena']
-    ,['mari','9876','Lara Mariane'],
-     ['pedro','teste1','Pedro Inácio']]
 
 app.secret_key = 'ASDdagsd@1'
 
@@ -56,6 +51,14 @@ def cadastrar_usuario():
     else:
         msg = 'Erro ao inserir usuário'
         return render_template('index.html', texto=msg)
+
+
+@app.route('/listarusuarios')
+def listar_usuarios():
+
+    usuarios = dao.listar_usuarios()
+    print(usuarios)
+    return render_template('listarusuarios.html', lista=usuarios)
 
 if __name__ == '__main__':
     app.run(debug=True)
