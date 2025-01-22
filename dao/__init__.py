@@ -11,7 +11,6 @@ def conectardb():
     )
     return con
 
-conectardb()
 
 def login(user,senha):
     con = conectardb()
