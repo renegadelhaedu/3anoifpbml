@@ -1,5 +1,5 @@
 import psycopg2
-
+#objeto de acesso aos dados
 def conectardb():
 
     con = psycopg2.connect(
@@ -48,11 +48,12 @@ def inserir_user(nome, login, senha):
 def listar_usuarios():
     con = conectardb()
     cur = con.cursor()
-    sq = f"SELECT  nome, login from usuario"
-    cur.execute(sq)
+    sql = f"SELECT  nome, login from usuario"
+    cur.execute(sql)
     saida = cur.fetchall()
 
     cur.close()
     con.close()
 
     return saida
+

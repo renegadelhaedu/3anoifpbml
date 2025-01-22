@@ -57,7 +57,6 @@ def cadastrar_usuario():
 def listar_usuarios():
 
     usuarios = dao.listar_usuarios()
-    print(usuarios)
     return render_template('listarusuarios.html', lista=usuarios)
 
 if __name__ == '__main__':
