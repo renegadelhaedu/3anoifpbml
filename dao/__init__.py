@@ -3,11 +3,15 @@ import psycopg2
 def conectardb():
 
     con = psycopg2.connect(
+        #host='localhost',
+        #database = '3anoifpb',
+        #user = 'postgres',
+        #password = '12345'
 
-        host='localhost',
-        database = '3anoifpb',
-        user = 'postgres',
-        password = '12345'
+        host = 'dpg-cu798q23esus73fhp800-a.oregon-postgres.render.com',
+        database = 'projetodaminhavida',
+        user = 'projetodaminhavida_user',
+        password = 'KQnjL1KdQ0Zsx2rn75FKcf4FAh7WVSt5'
     )
     return con
 
@@ -15,7 +19,7 @@ def conectardb():
 def login(user,senha):
     con = conectardb()
     cur = con.cursor()
-    sq = f"SELECT  nome, login from usuario where login='{user}' and senha='{senha}'  "
+    sq = f"SELECT  nome, matricula from usuarios where matricula='{user}' and senha='{senha}'  "
     cur.execute(sq)
     saida = cur.fetchall()
 
@@ -47,7 +51,7 @@ def inserir_user(nome, login, senha):
 def listar_usuarios():
     con = conectardb()
     cur = con.cursor()
-    sql = f"SELECT  nome, login from usuario"
+    sql = f"SELECT  nome, matricula from usuarios"
     cur.execute(sql)
     saida = cur.fetchall()
 

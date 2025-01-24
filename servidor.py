@@ -3,8 +3,8 @@ import dao
 
 app = Flask(__name__)
 
-app.secret_key = 'ASDdagsd@1'
-
+#definir uma chave secreta para o servidor flask
+app.secret_key = 'Khggj3h424j23hg44$#'
 
 @app.route('/logout', methods=['POST', 'GET'])
 def sair():
@@ -29,6 +29,7 @@ def fazer_login():
     saida = dao.login(login_user, senha_user)
 
     if len(saida) > 0:
+        session['login'] = login_user
         nome_user = saida[0][0]
         return render_template('home.html', nome=nome_user)
     else:
@@ -56,8 +57,11 @@ def cadastrar_usuario():
 @app.route('/listarusuarios')
 def listar_usuarios():
 
-    usuarios = dao.listar_usuarios()
-    return render_template('listarusuarios.html', lista=usuarios)
+    if 'login' in session:
+        usuarios = dao.listar_usuarios()
+        return render_template('listarusuarios.html', lista=usuarios)
+    else:
+        return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
